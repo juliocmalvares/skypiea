@@ -1,3 +1,6 @@
+mod filters;
+
 fn main() {
-    println!("Hello, world!");
+
+    let core = filters::convolution::core;
 }
