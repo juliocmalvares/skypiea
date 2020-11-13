@@ -1,21 +1,21 @@
 use image::ImageBuffer;
-mod newton_kernel;
+// mod newton_kernel;
 
-struct Convolutional {
-    img: ImageBuffer,
-    kernel: std::vec::Vec<std::vec::Vec<f64>>
-}
+// struct Convolutional {
+//     img: image::ImageBuffer,
+//     kernel: std::vec::Vec<std::vec::Vec<f64>>
+// }
 
 
-impl newton_kernel::NewtonKernel for Convolutional {
-    fn new() {
-        println!("Deu pau não");
-    }
+// impl newton_kernel::NewtonKernel for Convolutional {
+//     fn new() {
+//         println!("Deu pau não");
+//     }
 
-    fn apply() {
+//     fn apply() {
 
-    }
-}
+//     }
+// }
 
 
 
