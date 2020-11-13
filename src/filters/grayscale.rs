@@ -1,5 +1,5 @@
 extern crate image;
-use image::{RgbImage};
+use image::{GenericImageView, RgbImage};
 
 #[derive(Debug)]
 pub struct GrayScale {
@@ -19,5 +19,21 @@ impl GrayScale {
             *pixel = image::Rgb([average as u8, average as u8, average as u8]);
         }
         buffer
+    }
+}
+
+
+#[test]
+#[warn(unused_must_use)]
+fn it_works () {
+    let img = image::open("files/input/galaxy/andro.jpg").unwrap();
+    let mut buffer: RgbImage = image::ImageBuffer::new(img.dimensions().0, img.dimensions().1);
+    buffer = img.to_rgb();
+    let grl = GrayScale::new(buffer);
+    buffer = grl.apply();
+
+    match buffer.save("files/output/andromeda-gr-test.png") {
+        Ok(_) => (),
+        Err(_) => panic!("Test Grayscale Average failed")
     }
 }
