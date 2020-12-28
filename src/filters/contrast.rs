@@ -26,16 +26,16 @@ impl Contrast {
 }
 
 
-#[test]
-#[warn(unused_must_use)]
-fn it_works () {
-    let img = image::open("files/input/galaxy/andromeda.jpg").unwrap();
-    let mut buffer: RgbImage = image::ImageBuffer::new(img.dimensions().0, img.dimensions().1);
-    buffer = img.to_rgb();
-    let grl = Contrast::new(buffer, 2.5);
-    buffer = grl.apply();
-    match buffer.save("files/output/andromeda-constrast-test.png") {
-        Ok(_) => (),
-        Err(_) => panic!("Test Contrast failed")
-    }
-}
+// #[test]
+// #[warn(unused_must_use)]
+// fn it_works () {
+//     let img = image::open("files/input/galaxy/andromeda.jpg").unwrap();
+//     let mut buffer: RgbImage = image::ImageBuffer::new(img.dimensions().0, img.dimensions().1);
+//     buffer = img.to_rgb();
+//     let grl = Contrast::new(buffer, 2.5);
+//     buffer = grl.apply();
+//     match buffer.save("files/output/andromeda-constrast-test.png") {
+//         Ok(_) => (),
+//         Err(_) => panic!("Test Contrast failed")
+//     }
+// }
