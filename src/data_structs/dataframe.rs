@@ -1,4 +1,9 @@
 use std::vec::*;
+// use rayon::prelude::*;
+use std::fmt::Debug;
+use std::ops::{Add, Div, Sub, Mul};
+use num::{Zero, FromPrimitive};
+use std::convert::*;
 
 #[derive(Debug)]
 pub struct DataFrame<T> {
@@ -6,7 +11,17 @@ pub struct DataFrame<T> {
     pub columns: Vec<String>
 }
 
-impl<T: Clone> DataFrame<T> {
+impl<T: Clone + 
+    Debug + 
+    Zero + 
+    Copy + 
+    FromPrimitive + 
+    Add<T, Output = T> + 
+    Div<T, Output = T> + 
+    Sub<T, Output = T> + 
+    Mul<T, Output = T> + 
+    Into<f64>
+    > DataFrame<T> {
     pub fn new() -> Self {
         DataFrame{
             data: Vec::with_capacity(0),
@@ -16,6 +31,33 @@ impl<T: Clone> DataFrame<T> {
 
     pub fn get_columns(&self) -> Vec<String> {
         self.columns.clone()
+    }
+
+    fn get_column_index(&self, column:String) -> usize {
+        for i in 0..self.columns.len() {
+            if self.columns[i] == column {
+                return i
+            }
+        }
+        usize::MAX
+    }
+
+    pub fn sum(&self, column: String) -> T {     
+        self.data[self.get_column_index(column)].iter().fold(T::zero(), |sum, &val| sum + val)
+    }
+
+    pub fn mean(&self, column:String) -> T {
+        let v = self.data[self.get_column_index(column.clone())].clone();
+        self.sum(column.clone()) / FromPrimitive::from_usize(v.len()).unwrap()
+    }
+
+    pub fn std(&self, column: String) -> f64 {
+        let v = self.data[self.get_column_index(column.clone())].clone();
+        let mut sum: f64 = 0.0;
+        for i in 0..v.len() {
+            sum = sum + (v[i] - self.mean(column.clone())).into().powf(2.0);
+        }
+        sum.sqrt()
     }
 
 }
