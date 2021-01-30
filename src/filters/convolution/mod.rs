@@ -1,2 +1,2 @@
-pub mod core;
-pub mod newton_kernel;
+pub mod convolution;
+pub use self::convolution::*;
