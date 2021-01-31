@@ -17,5 +17,8 @@ fn main() {
     println!("Mean: {:?}", data.mean(String::from("c2")));
     println!("Std: {:?}", data.std(String::from("c2")));
     data.head();
+
+    println!("\n\n");
+    data.describe();
 }
 

@@ -11,6 +11,7 @@ pub struct DataFrame<T> {
     pub columns: Vec<String>
 }
 
+//mudar para a implementação pegar a coluna e não a linha
 impl<T: Clone + 
     Debug + 
     Zero + 
@@ -51,6 +52,28 @@ impl<T: Clone +
         self.sum(column.clone()) / FromPrimitive::from_usize(v.len()).unwrap()
     }
 
+    pub fn min(&self, column: String) -> f64 {
+        let v = self.data[self.get_column_index(column.clone())].clone();
+        let mut min:f64 = f64::MAX;
+        for x in 0..v.len() {
+            if v[x].into() < min { 
+                min = v[x].into();
+            }
+        }
+        min
+    }
+
+    pub fn max(&self, column: String) -> f64 {
+        let v = self.data[self.get_column_index(column.clone())].clone();
+        let mut max : T  = T::zero();
+        for x in 0..v.len() {
+            if v[x].into() > max.into() { 
+                max = v[x];
+            }
+        }
+        max.into()
+    }
+
     pub fn std(&self, column: String) -> f64 {
         let v = self.data[self.get_column_index(column.clone())].clone();
         let mut sum: f64 = 0.0;
@@ -70,6 +93,17 @@ impl<T: Clone +
             for i in 0..3 {
                 println!("{:?} {:?}", i, self.data[i]);
             }
+        }
+    }
+
+    pub fn describe(&self) {
+        for i in 0..self.columns.len() - 1 {
+            println!("Column: {}", self.columns[i]);
+            println!("Min: {:?}", self.min(self.columns[i].clone()));
+            println!("Max: {:?}", self.max(self.columns[i].clone()));
+            println!("Sum: {:?}", self.sum(self.columns[i].clone()));
+            println!("Mean: {:?}", self.mean(self.columns[i].clone()));
+            println!("Std: {:?}", self.std(self.columns[i].clone()));
         }
     }
 
