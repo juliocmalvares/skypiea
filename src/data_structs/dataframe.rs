@@ -60,4 +60,18 @@ impl<T: Clone +
         sum.sqrt()
     }
 
+    pub fn head(&self) {
+        if self.data.len() >= 3 {
+            print!("  ");
+            for i in 0..self.columns.len(){
+                print!("{} ", self.columns[i]);
+            }
+            print!("\n");
+            for i in 0..3 {
+                println!("{:?} {:?}", i, self.data[i]);
+            }
+        }
+    }
+
+
 }
